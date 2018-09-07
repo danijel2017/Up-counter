@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Forever counter</title>
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+</head>
+<body>
+    <h1>Forever Counter</h1>
+    <div>
+        <p>Counter 1</p>
+        <span><b>Start Value: </b>$991,200,000.00&nbsp;,&nbsp;</span>
+        <span><b>Step: </b>81/s</span>
+        <div><b>Current Valus: </b>$<span id="cur_val1"></span></div>
+    </div>
+
+    <div>
+        <p>Counter 2</p>
+        <span><b>Start Value: </b>56,640&nbsp;,&nbsp;</span>
+        <span><b>Step: </b>0.277777778/min</span>
+        <div><b>Current Valus: </b><span id="cur_val2"></span></div>
+    </div>
+
+    <script>
+        var utc = new Date(2018, 05, 01, 00, 00, 00, 00);
+        console.log('utc : ', utc.getTime());
+
+        var cur_time = new Date();
+        var local_to_utc = cur_time.getTime() + cur_time.getTimezoneOffset() * 60000;
+        console.log('local_to_utc : ', cur_time.getTime());
+
+        var value1 = Math.round(991200000 + (local_to_utc - utc.getTime()) / 1000 * 81);
+        var value2 = Math.round((56640 + (local_to_utc - utc.getTime()) / 1000 * 0.277777778 / 60) * 1000000000) / 1000000000;
+        
+        var cur_val1 = document.getElementById('cur_val1');
+        var cur_val2 = document.getElementById('cur_val2');
+        cur_val1.innerHTML = value1;
+        cur_val2.innerHTML = Math.round(value2);
+        
+        setInterval(function(){
+            value1 += 81;
+            value2 += 0.277777778 / 60;
+            document.getElementById('cur_val1').innerHTML = value1;
+        }, 1000);
+
+        setInterval(function(){            
+            document.getElementById('cur_val2').innerHTML = Math.round(value2);
+        }, 60 * 1000);
+
+        // var cur_time = Date.now();
+
+        // var value1;
+        // if(!localStorage.cur_val1) value1 = 991200000;
+        // else value1 = Math.round(Number(localStorage.cur_val1) + Number(cur_time - localStorage.old_time) / 1000 * 81);
+
+        // var value2;
+        // if(!localStorage.cur_val2) value2  = 56640;
+        // else value2 = Math.round((Number(localStorage.cur_val2) + Number(cur_time - localStorage.old_time) / 1000 * 0.277777778 / 60) * 1000000000) / 1000000000;
+
+        // var cur_val1 = document.getElementById('cur_val1');
+        // var cur_val2 = document.getElementById('cur_val2');
+        // cur_val1.innerHTML = value1;
+        // cur_val2.innerHTML = Math.round(value2);
+        
+        // setInterval(function(){
+        //     value1 += 81;
+        //     value2 += 0.277777778 / 60;
+        //     document.getElementById('cur_val1').innerHTML = value1;
+        //     localStorage.setItem('cur_val1', value1);
+        //     localStorage.setItem('cur_val2', value2);
+        //     localStorage.setItem('old_time', Date.now());
+        // }, 1000);
+
+        // setInterval(function(){            
+        //     document.getElementById('cur_val2').innerHTML = Math.round(value2);
+        // }, 60 * 1000);
+
+    </script>
+</body>
+</html>
